@@ -5,5 +5,5 @@ Resources:
       Properties:
         Name: "lambda-card"
         Alias: "lambda-card-version"
-        CurrentVersion: "1"
-        TargetVersion: "2"
+        CurrentVersion: "4"
+        TargetVersion: "5"
