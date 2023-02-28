@@ -1,9 +1,15 @@
 version: 0.0
+
+env:
+  variables:
+    FUNCTION_NAME: "lambda-card"
+    ALIAS_NAME: "lambda-card-version"
+
 Resources:
   - myLambdaFunction:
       Type: AWS::Lambda::Function
       Properties:
-        Name: "lambda-card"
-        Alias: "lambda-card-version"
+        Name: ${FUNCTION_NAME}
+        Alias: ${ALIAS_NAME}
         CurrentVersion: "4"
         TargetVersion: "5"

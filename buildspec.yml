@@ -39,4 +39,3 @@ phases:
 artifacts:
   files:
     - main.zip
-    - '**/appspec.yaml'
