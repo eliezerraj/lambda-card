@@ -16,14 +16,14 @@ phases:
       - echo BUILD update lambda-function... 
 
       - LAMBDA_NEW_VERSION=$(aws lambda update-function-code --function-name ${FUNCTION_NAME} --s3-bucket ${BUCKET_NAME} --s3-key ${FUNCTION_NAME}/main.zip | jq '.Version')
-      - echo LAMBDA_NEW_VERSION: $LAMBDA_NEW_VERSION 
+      - echo LAMBDA_NEW_VERSION $LAMBDA_NEW_VERSION 
 
   post_build: 
       commands: 
       - echo POST_BUILD setting appspec Function... 
 
       - LAMBDA_ALIAS_VERSION_CURRENT=$(aws lambda get-alias --function-name ${FUNCTION_NAME} --name ${ALIAS_NAME}| jq '.FunctionVersion')
-      - echo LAMBDA_ALIAS_VERSION_CURRENT: $LAMBDA_ALIAS_VERSION_CURRENT
+      - echo LAMBDA_ALIAS_VERSION_CURRENT $LAMBDA_ALIAS_VERSION_CURRENT
 
 artifacts:
   files:
