@@ -17,7 +17,7 @@ import (
 var (
 	logLevel = zerolog.DebugLevel // InfoLevel DebugLevel
 	tableName 			= "card"
-	version 			= "lambda-card version 1.0"	
+	version 			= "lambda-card version 2.0"	
 	response 			*events.APIGatewayProxyResponse
 	cardRepository		*repository.CardRepository
 	cardService 		*service.CardService
