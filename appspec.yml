@@ -6,5 +6,5 @@ Resources:
       Properties:
         Name: $Name
         Alias: $Alias
-        CurrentVersion: $TargetVersion
-        TargetVersion: $CurrentVersion
+        CurrentVersion: $CurrentVersion
+        TargetVersion: $TargetVersion
