@@ -1,17 +1,10 @@
 version: 0.0
 
-env:
-  variables:
-    FUNCTION_NAME: $Name
-    ALIAS_NAME: $Alias
-    CURRENT_VERSION: $TargetVersion
-    TARGET_VERSION: $CurrentVersion
-
 Resources:
   - myLambdaFunction:
       Type: AWS::Lambda::Function
       Properties:
-        Name: "${FUNCTION_NAME}"
-        Alias: "${ALIAS_NAME}"
-        CurrentVersion: ${CURRENT_VERSION}
-        TargetVersion: ${TARGET_VERSION}
+        Name: $Name
+        Alias: $Alias
+        CurrentVersion: $TargetVersion
+        TargetVersion: $CurrentVersion
