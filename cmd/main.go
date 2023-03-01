@@ -36,7 +36,7 @@ func getEnv() {
 		}else if (os.Getenv("LOG_LEVEL") == "ERROR"){
 				logLevel = zerolog.ErrorLevel
 		}else {
-			logLevel = zerolog.InfoLevel
+			logLevel = zerolog.DebugLevel
 		}
 	}
 	if os.Getenv("VERSION") !=  "" {
