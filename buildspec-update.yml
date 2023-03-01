@@ -7,6 +7,7 @@ env:
     BUCKET_NAME: account-a-884069944685-codedeploy-artfacts
     CODEDEPLOY_APPLICATION_NAME: lambda-person-deploy
     CODEDEPLOY_APPLICATION_GROUP: lambda-person-deploy-group
+    REGION_DEPLOYMENT: us-east-2
     
 phases: 
   pre_build: 
@@ -35,7 +36,8 @@ phases:
       - aws s3 cp appspec.yml s3://${BUCKET_NAME}/${FUNCTION_NAME}/
 
       - echo Start CodeDeploy rollout...
-      - aws deploy create-deployment --application-name ${CODEDEPLOY_APPLICATION_NAME} --${CODEDEPLOY_APPLICATION_GROUP} --s3-location ${BUCKET_NAME}/${FUNCTION_NAME}, bundleType=yaml, key=appspec.yml
+      - echo aws deploy create-deployment --region=${REGION_DEPLOYMENT} --application-name ${CODEDEPLOY_APPLICATION_NAME} --${CODEDEPLOY_APPLICATION_GROUP} --s3-location ${BUCKET_NAME}/${FUNCTION_NAME}, bundleType=yaml, key=appspec.yml
+      - aws deploy create-deployment --region=${REGION_DEPLOYMENT} --application-name ${CODEDEPLOY_APPLICATION_NAME} --${CODEDEPLOY_APPLICATION_GROUP} --s3-location ${BUCKET_NAME}/${FUNCTION_NAME}, bundleType=yaml, key=appspec.yml
 
 artifacts:
   files:
