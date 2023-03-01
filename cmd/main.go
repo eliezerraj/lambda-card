@@ -17,16 +17,12 @@ import (
 var (
 	logLevel = zerolog.DebugLevel // InfoLevel DebugLevel
 	tableName 			= "card"
-	version 			= "lambda-card version 2.0"	
+	version 			= "lambda-card version 3.0"	
 	response 			*events.APIGatewayProxyResponse
 	cardRepository		*repository.CardRepository
 	cardService 		*service.CardService
 	cardHandler 		*handler.CardHandler
 )
-
-func init(){
-	zerolog.SetGlobalLevel(logLevel)
-}
 
 func getEnv() {
 	if os.Getenv("TABLE_NAME") !=  "" {
@@ -48,8 +44,19 @@ func getEnv() {
 	}
 }
 
+func init(){
+	log.Debug().Msg("init")
+	zerolog.SetGlobalLevel(logLevel)
+	getEnv()
+}
+
 func main()  {
-	log.Debug().Msg("main lambda-card (go) v 1.0")
+	log.Debug().Msg("main lambda-card (go) v 2.0")
+	log.Debug().Msg("-------------------")
+	log.Debug().Str("version", version).
+				Str("tableName", tableName).
+				Msg("Enviroment Variables")
+	log.Debug().Msg("--------------------")
 
 	cardRepository, err := repository.NewCardRepository(tableName)
 	if err != nil{
@@ -63,6 +70,11 @@ func main()  {
 
 func lambdaHandler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	log.Debug().Msg("handler")
+	log.Debug().Msg("-------------------")
+	log.Debug().Str("req.Body", req.Body).
+				Msg("APIGateway Request.Body")
+	log.Debug().Msg("--------------------")
+
 	switch req.HTTPMethod {
 		case "GET":
 			if (req.Resource == "/card/{id}"){
