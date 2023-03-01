@@ -35,7 +35,7 @@ phases:
       - aws s3 cp appspec.yml s3://${BUCKET_NAME}/${FUNCTION_NAME}
 
       - echo Start CodeDeploy rollout...
-      - aws deploy create-deployment --application-name ${CODEDEPLOY_APPLICATION_NAME} --${CODEDEPLOY_APPLICATION_GROUP} test-pipeline-group --s3-location ${BUCKET_NAME}/${FUNCTION_NAME}, bundleType=yaml, key=appspec.yml
+      - aws deploy create-deployment --application-name ${CODEDEPLOY_APPLICATION_NAME} --${CODEDEPLOY_APPLICATION_GROUP} --s3-location ${BUCKET_NAME}/${FUNCTION_NAME}, bundleType=yaml, key=appspec.yml
 
 artifacts:
   files:
