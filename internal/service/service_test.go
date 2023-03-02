@@ -7,13 +7,15 @@ import (
 	"github.com/rs/zerolog"
 
 	"github.com/lambda-card/internal/repository"
+	"github.com/lambda-card/internal/adapter/notification"
 	"github.com/lambda-card/internal/core/domain"
 
 )
 
 var (
-	//logLevel = 
 	tableName = "card"
+	eventSource	= "lambda-card"
+	eventBusName	= "event-bus-card"
 	cardRepository	*repository.CardRepository
 	card01 = domain.NewCard("CARD-4444.000.000.001",
 							"CARD-4444.000.000.001",
@@ -32,7 +34,6 @@ var (
 							"TENANT-001")
 )
 
-
 func TestAddCard(t *testing.T) {
 	t.Setenv("AWS_REGION", "us-east-2")
 	zerolog.SetGlobalLevel(zerolog.ErrorLevel)
@@ -42,7 +43,12 @@ func TestAddCard(t *testing.T) {
 		t.Errorf("Error - TestAddCard Create Repository DynanoDB")
 	}
 
-	service	:= NewCardService(*repository)
+	notification, err := notification.NewCardNotification(eventSource,eventBusName)
+	if err != nil {
+		t.Errorf("Error -TestPutEvent Access EventBridge %v ", err)
+	}
+
+	service	:= NewCardService(*repository, *notification)
 
 	result, err := service.AddCard(*card01)
 	if err != nil {
@@ -64,8 +70,12 @@ func TestGetCard(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error - TestGetCard Create Repository DynanoDB")
 	}
+	notification, err := notification.NewCardNotification(eventSource,eventBusName)
+	if err != nil {
+		t.Errorf("Error -TestPutEvent Access EventBridge %v ", err)
+	}
 
-	service	:= NewCardService(*repository)
+	service	:= NewCardService(*repository, *notification)
 
 	result, err := service.GetCard(*card01)
 	if err != nil {
@@ -95,7 +105,12 @@ func TestGetStatusCard(t *testing.T) {
 		t.Errorf("Error - TestGetStatusCard Create Repository DynanoDB")
 	}
 
-	service	:= NewCardService(*repository)
+	notification, err := notification.NewCardNotification(eventSource,eventBusName)
+	if err != nil {
+		t.Errorf("Error -TestPutEvent Access EventBridge %v ", err)
+	}
+
+	service	:= NewCardService(*repository, *notification)
 
 	card01.Status = "HOLD"
 	result, err := service.SetCardStatus(*card01)

@@ -10,18 +10,22 @@ import (
 
     "github.com/lambda-card/internal/service"
 	"github.com/lambda-card/internal/adapter/handler"
+	"github.com/lambda-card/internal/adapter/notification"
 	"github.com/lambda-card/internal/repository"
 
 )
 
 var (
-	logLevel = zerolog.DebugLevel // InfoLevel DebugLevel
-	tableName 			= "card"
-	version 			= "lambda-card version 3.0"	
-	response 			*events.APIGatewayProxyResponse
-	cardRepository		*repository.CardRepository
-	cardService 		*service.CardService
-	cardHandler 		*handler.CardHandler
+	logLevel		=	zerolog.DebugLevel // InfoLevel DebugLevel
+	tableName		=	"card"
+	version			=	"lambda-card (github) version 1.0"
+	eventSource		=	"lambda-card"
+	eventBusName	=	"event-bus-card"	
+	response		*events.APIGatewayProxyResponse
+	cardRepository	*repository.CardRepository
+	cardService		*service.CardService
+	cardHandler		*handler.CardHandler
+	cardNotification *notification.CardNotification
 )
 
 func getEnv() {
@@ -62,8 +66,13 @@ func main()  {
 	if err != nil{
 		return
 	}
-	cardService = service.NewCardService(*cardRepository)
-	cardHandler = handler.NewCardHandler(*cardService)
+	cardNotification, err = notification.NewCardNotification(eventSource,eventBusName)
+	if err != nil{
+		return
+	}
+
+	cardService 	= service.NewCardService(*cardRepository, *cardNotification)
+	cardHandler 	= handler.NewCardHandler(*cardService)
 
 	lambda.Start(lambdaHandler)
 }

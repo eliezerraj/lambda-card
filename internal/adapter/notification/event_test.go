@@ -9,6 +9,8 @@ import (
 
 var (
 	tableName = "card"
+	eventSource	= "lambda-card"
+	eventBusName	= "event-bus-card"
 	card01 = domain.NewCard("CARD-4444.000.000.001",
 							"CARD-4444.000.000.001",
 							"4444.000.000.001",
@@ -21,7 +23,7 @@ var (
 func TestPutEvent(t *testing.T) {
 	t.Setenv("AWS_REGION", "us-east-2")
 
-	notification, err := NewCardNotification()
+	notification, err := NewCardNotification(eventSource,eventBusName)
 	if err != nil {
 		t.Errorf("Error -TestPutEvent Access EventBridge %v ", err)
 	}

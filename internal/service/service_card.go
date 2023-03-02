@@ -8,10 +8,19 @@ import (
 func (s *CardService) AddCard(card domain.Card) (*domain.Card, error){
 	childLogger.Debug().Msg("AddCard")
 
+	// Add new card
 	c, err := s.cardRepository.AddCard(card)
 	if err != nil {
 		return nil, err
 	}
+
+	// Stream new card
+	eventType := "add-new-card"
+	err = s.cardNotification.PutEvent(*c, eventType)
+	if err != nil {
+		return nil, err
+	}
+
 	return c, nil
 }
 
@@ -28,7 +37,15 @@ func (s *CardService) GetCard(card domain.Card) (*domain.Card, error){
 func (s *CardService) SetCardStatus(card domain.Card) (*domain.Card, error){
 	childLogger.Debug().Msg("SetCardStatus")
 
+	// Change status card, as the DB is a Dynamo de AddCard is a Upsert
 	c, err := s.cardRepository.AddCard(card)
+	if err != nil {
+		return nil, err
+	}
+
+	// Stream new card
+	eventType := "change-status-card"
+	err = s.cardNotification.PutEvent(*c, eventType)
 	if err != nil {
 		return nil, err
 	}

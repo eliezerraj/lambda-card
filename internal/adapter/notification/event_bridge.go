@@ -17,10 +17,12 @@ import (
 var childLogger = log.With().Str("notification", "eventBridge").Logger()
 
 type CardNotification struct {
-	client		*eventbridge.EventBridge
+	client			*eventbridge.EventBridge
+	eventSource		string
+	eventBusName 	string
 }
 
-func NewCardNotification() (*CardNotification, error){
+func NewCardNotification(eventSource string, eventBusName string ) (*CardNotification, error){
 	childLogger.Debug().Msg("NewCardNotification")
 
 	region := os.Getenv("AWS_REGION")
@@ -33,6 +35,8 @@ func NewCardNotification() (*CardNotification, error){
 	}
 	return &CardNotification{
 		client: eventbridge.New(awsSession),
+		eventSource: eventSource,
+		eventBusName: eventBusName,
 	}, nil
 }
 
@@ -48,8 +52,8 @@ func (n *CardNotification) PutEvent(card domain.Card, eventType string) error {
 	entries := []*eventbridge.PutEventsRequestEntry{{
 		Detail:       aws.String(string(payload)),
 		DetailType:   aws.String(eventType),
-		EventBusName: aws.String("event-bus-card"),
-		Source:       aws.String("lambda-card"),
+		EventBusName: aws.String(n.eventBusName),
+		Source:       aws.String(n.eventSource),
 	}}
 
 	_, err = n.client.PutEvents(&eventbridge.PutEventsInput{Entries: entries})

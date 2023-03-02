@@ -11,6 +11,10 @@ import(
 
 )
 
+func (r *CardRepository) Ping() (bool, error){
+	return true, nil
+}
+
 func (r *CardRepository) AddCard(card domain.Card) (*domain.Card, error){
 	childLogger.Debug().Msg("AddCard")
 
