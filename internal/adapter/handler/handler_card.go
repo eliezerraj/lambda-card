@@ -42,7 +42,7 @@ func (h *CardHandler) UnhandledMethod() (*events.APIGatewayProxyResponse, error)
 }
 
 func (h *CardHandler) AddCard(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
-	childLogger.Debug().Msg("AddPerson")
+	childLogger.Debug().Msg("AddCard")
 
     var card domain.Card
     if err := json.Unmarshal([]byte(req.Body), &card); err != nil {
