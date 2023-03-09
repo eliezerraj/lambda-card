@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"context"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -18,7 +19,7 @@ import (
 var (
 	logLevel		=	zerolog.DebugLevel // InfoLevel DebugLevel
 	tableName		=	"card"
-	version			=	"lambda-card (github) version 1.0"
+	version			=	"lambda-card (github) version 1.1"
 	eventSource		=	"lambda-card"
 	eventBusName	=	"event-bus-card"	
 	response		*events.APIGatewayProxyResponse
@@ -77,7 +78,7 @@ func main()  {
 	lambda.Start(lambdaHandler)
 }
 
-func lambdaHandler(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+func lambdaHandler(ctx context.Context, req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	log.Debug().Msg("handler")
 	log.Debug().Msg("-------------------")
 	log.Debug().Str("req.Body", req.Body).
