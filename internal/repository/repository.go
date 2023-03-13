@@ -21,7 +21,7 @@ type CardRepository struct {
 }
 
 func NewCardRepository(tableName string) (*CardRepository, error){
-	childLogger.Debug().Msg("NewCardRepository")
+	childLogger.Debug().Msg("*** NewCardRepository")
 	
 	region := os.Getenv("AWS_REGION")
     awsSession, err := session.NewSession(&aws.Config{
