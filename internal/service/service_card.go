@@ -10,7 +10,7 @@ func (s *CardService) AddCard(card domain.Card) (*domain.Card, error){
 
 	// Setting ID and Sort key
 	card.ID = "CARD-" + card.CardNumber
-	card.SK = "CARD-" + card.CardNumber
+	card.SK = "PERSON:PERSON-" + card.SK
 	// Add new card 
 	c, err := s.cardRepository.AddCard(card)
 	if err != nil {
@@ -32,7 +32,7 @@ func (s *CardService) GetCard(card domain.Card) (*domain.Card, error){
 	
 	// Setting ID and Sort key
 	card.ID = "CARD-" + card.CardNumber
-	card.SK = "CARD-" + card.CardNumber
+	card.SK = "PERSON:PERSON-" + card.SK
 	c, err := s.cardRepository.GetCard(card)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (s *CardService) SetCardStatus(card domain.Card) (*domain.Card, error){
 
 	// Setting ID and Sort key
 	card.ID = "CARD-" + card.CardNumber
-	card.SK = "CARD-" + card.CardNumber
+	card.SK = "PERSON:PERSON-" + card.SK
 	// Change status card, as the DB is a Dynamo de AddCard is a Upsert
 	c, err := s.cardRepository.AddCard(card)
 	if err != nil {
