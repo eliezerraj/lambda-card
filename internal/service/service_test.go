@@ -17,16 +17,16 @@ var (
 	eventSource	= "lambda-card"
 	eventBusName	= "event-bus-card"
 	cardRepository	*repository.CardRepository
-	card01 = domain.NewCard("CARD-4444.000.000.001",
-							"CARD-4444.000.000.001",
+	card01 = domain.NewCard("",
+							"",
 							"4444.000.000.001",
 							"ELIEZER R A JR",
 							"ACTIVE",
 							"02/26",
 							"TENANT-001")
 
-	card02 = domain.NewCard("CARD-4444.000.000.002",
-							"CARD-4444.000.000.002",
+	card02 = domain.NewCard("",
+							"",
 							"4444.000.000.002",
 							"JULIANA PIVATO",
 							"ACTIVE",
@@ -55,6 +55,9 @@ func TestAddCard(t *testing.T) {
 		t.Errorf("Error -TestAddCard Access DynanoDB %v ", tableName)
 	}
 
+	//adjust ID + SK 
+	card01.ID = "CARD-" + card01.CardNumber
+	card01.SK = "CARD-" + card01.CardNumber
 	if (cmp.Equal(card01, result)) {
 		t.Logf("Success on TestAddCard!!! result : %v ", result)
 	} else {
@@ -82,6 +85,9 @@ func TestGetCard(t *testing.T) {
 		t.Errorf("Error -TestGetCard Access DynanoDB %v ", tableName)
 	}
 
+	//adjust ID + SK 
+	card01.ID = "CARD-" + card01.CardNumber
+	card01.SK = "CARD-" + card01.CardNumber
 	if (cmp.Equal(card01, result)) {
 		t.Logf("Success on TestGetCard!!! result : %v ", result)
 	} else {
@@ -118,6 +124,9 @@ func TestGetStatusCard(t *testing.T) {
 		t.Errorf("Error -TestGetStatusCard Access DynanoDB %v ", tableName)
 	}
 
+	//adjust ID + SK 
+	card01.ID = "CARD-" + card01.CardNumber
+	card01.SK = "CARD-" + card01.CardNumber
 	if (cmp.Equal(card01, result)) {
 		t.Logf("Success on TestGetStatusCard!!! result : %v ", result)
 	} else {
