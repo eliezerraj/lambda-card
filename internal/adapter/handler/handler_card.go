@@ -95,7 +95,7 @@ func (h *CardHandler) GetCard(req events.APIGatewayProxyRequest) (*events.APIGat
 		return ApiHandlerResponse(http.StatusBadRequest, ErrorBody{aws.String(erro.ErrQueryEmpty.Error())})
 	}
 
- 	card := domain.NewCard(id,id,"","","","","TENANT-001")
+ 	card := domain.NewCard("","",id,"","","","TENANT-001")
 
 	response, err := h.cardService.GetCard(*card)
 	if err != nil {
