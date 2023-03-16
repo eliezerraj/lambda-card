@@ -5,6 +5,11 @@ import (
 
 )
 
+var(
+	eventTypeCreated =  "cardCreated"
+	eventTypeUpdated = 	"cardStatusUpdated"
+)
+
 func (s *CardService) AddCard(card domain.Card) (*domain.Card, error){
 	childLogger.Debug().Msg("AddCard")
 
@@ -18,8 +23,7 @@ func (s *CardService) AddCard(card domain.Card) (*domain.Card, error){
 	}
 
 	// Stream new card
-	eventType := "add-new-card"
-	err = s.cardNotification.PutEvent(*c, eventType)
+	err = s.cardNotification.PutEvent(*c, eventTypeCreated)
 	if err != nil {
 		return nil, err
 	}
@@ -53,8 +57,7 @@ func (s *CardService) SetCardStatus(card domain.Card) (*domain.Card, error){
 	}
 
 	// Stream new card
-	eventType := "change-status-card"
-	err = s.cardNotification.PutEvent(*c, eventType)
+	err = s.cardNotification.PutEvent(*c, eventTypeUpdated)
 	if err != nil {
 		return nil, err
 	}

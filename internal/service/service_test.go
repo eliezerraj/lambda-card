@@ -14,7 +14,7 @@ import (
 
 var (
 	tableName = "card"
-	eventSource	= "lambda-card"
+	eventSource	= "lambda.card"
 	eventBusName	= "event-bus-card"
 	cardRepository	*repository.CardRepository
 )
