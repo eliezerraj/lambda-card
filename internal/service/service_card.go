@@ -50,6 +50,13 @@ func (s *CardService) SetCardStatus(card domain.Card) (*domain.Card, error){
 	// Setting ID and Sort key
 	card.ID = "CARD-" + card.CardNumber
 	card.SK = "PERSON:PERSON-" + card.SK
+
+	//Check if card exists
+	_, err := s.cardRepository.GetCard(card)
+	if err != nil {
+		return nil, err
+	}
+
 	// Change status card, as the DB is a Dynamo de AddCard is a Upsert
 	c, err := s.cardRepository.AddCard(card)
 	if err != nil {

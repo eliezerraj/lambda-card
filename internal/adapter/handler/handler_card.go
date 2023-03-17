@@ -69,12 +69,12 @@ func (h *CardHandler) SetCardStatus(req events.APIGatewayProxyRequest) (*events.
         return ApiHandlerResponse(http.StatusBadRequest, ErrorBody{aws.String(err.Error())})
     }
 
-	response, err := h.cardService.GetCard(card)
+	/*response, err := h.cardService.GetCard(card)
 	if err != nil {
 		return ApiHandlerResponse(http.StatusNotFound, ErrorBody{aws.String(err.Error())})
 	}
 
-	response.Status = card.Status
+	response.Status = card.Status*/
 	response, err = h.cardService.SetCardStatus(*response)
 	if err != nil {
 		return ApiHandlerResponse(http.StatusBadRequest, ErrorBody{aws.String(err.Error())})
