@@ -36,8 +36,8 @@ func TestAddCard(t *testing.T) {
 	service	:= NewCardService(*repository, *notification)
 
 	card01 := domain.NewCard("",
-							"001",
-							"4444.000.000.001",
+							"901",
+							"9999.000.000.901",
 							"ELIEZER R A JR",
 							"ACTIVE",
 							"02/26",
@@ -73,8 +73,8 @@ func TestGetCard(t *testing.T) {
 	service	:= NewCardService(*repository, *notification)
 
 	card01 := domain.NewCard("",
-							"001",
-							"4444.000.000.001",
+							"901",
+							"9999.000.000.901",
 							"ELIEZER R A JR",
 							"ACTIVE",
 							"02/26",
@@ -94,11 +94,11 @@ func TestGetCard(t *testing.T) {
 	}
 
 	card02 := domain.NewCard("",
-							"002",
-							"4444.000.000.002",
+							"902",
+							"9999.000.000.902",
 							"JULIANA PIVATO",
 							"ACTIVE",
-							"02/26",
+							"03/29",
 							"TENANT-001")
 
 	result, err = service.GetCard(*card02)
@@ -125,10 +125,10 @@ func TestGetStatusCard(t *testing.T) {
 
 	service	:= NewCardService(*repository, *notification)
 	card01 := domain.NewCard("",
-							"001",
-							"4444.000.000.001",
+							"901",
+							"9999.000.000.901",
 							"ELIEZER R A JR",
-							"HOLD",
+							"ACTIVE",
 							"02/26",
 							"TENANT-001")
 	result, err := service.SetCardStatus(*card01)
