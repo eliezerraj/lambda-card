@@ -2,7 +2,7 @@
 
 POC Lambda for technical purposes
 
-Lambda persist all data inside DynamoDB and create a notification via event EventBridge
+Lambda persist CARD data inside DynamoDB and create a notification via event EventBridge
 
 Diagrama Flow
 
